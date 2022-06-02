@@ -16,6 +16,7 @@ import java.util.Map;
 public class KafkaProducerConfig {
 
     // bootstrap servers url
+    // value is from application.properties
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
@@ -28,7 +29,7 @@ public class KafkaProducerConfig {
         return property;
     }
 
-    // factory to create new producers
+    // factory to create new kafka producers
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfig());
