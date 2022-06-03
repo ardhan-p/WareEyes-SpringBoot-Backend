@@ -3,6 +3,10 @@ A web application built on Spring Boot that monitors an inventory system in real
 
 This repository contains the backend section.
 
+## Spring for Apache Kafka Docs
+
+https://docs.spring.io/spring-kafka/docs/current/reference/html/
+
 ## Kafka Terminal Commands
 - To start zookeeper:
 
