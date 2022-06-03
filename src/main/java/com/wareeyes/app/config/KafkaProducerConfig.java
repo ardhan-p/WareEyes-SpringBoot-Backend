@@ -22,6 +22,7 @@ public class KafkaProducerConfig {
     private String bootstrapServers;
 
     // config map object to pass into a producer factory
+    // kafka producers will have to serialise key and value strings
     public Map<String, Object> producerConfig() {
         HashMap<String, Object> property = new HashMap<>();
         property.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
