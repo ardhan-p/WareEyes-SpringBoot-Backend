@@ -12,6 +12,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+// kafka producer config class is needed to create new kafka producers
 @Configuration
 public class KafkaProducerConfig {
 
@@ -35,7 +36,7 @@ public class KafkaProducerConfig {
         return new DefaultKafkaProducerFactory<>(producerConfig());
     }
 
-    // kafka template for kafka events
+    // kafka template for kafka event messages
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
