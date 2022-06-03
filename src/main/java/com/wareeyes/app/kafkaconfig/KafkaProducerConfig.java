@@ -1,4 +1,4 @@
-package com.wareeyes.app.config;
+package com.wareeyes.app.kafkaconfig;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -16,7 +16,7 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
 
-    // bootstrap servers url
+    // bootstrap servers url (default is localhost:9092)
     // value is from application.properties
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;

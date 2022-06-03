@@ -1,4 +1,4 @@
-package com.wareeyes.app.config;
+package com.wareeyes.app.kafkaconfig;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Configuration;
