@@ -15,3 +15,7 @@ bin/zookeeper-server-start.sh config/zookeeper.properties
 - To start server:
 
 bin/kafka-server-start.sh config/server.properties
+
+- CLI commands:
+
+https://www.conduktor.io/kafka/kafka-topics-cli-tutorial
