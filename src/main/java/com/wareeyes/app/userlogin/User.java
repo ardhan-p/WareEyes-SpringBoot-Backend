@@ -2,8 +2,25 @@ package com.wareeyes.app.userlogin;
 
 public class User {
     private int id;
-    private String username;
+    private String email;
     private String password;
+    private boolean isAdmin;
+
+    public User() {
+    }
+
+    public User(int id, String email, String password, boolean isAdmin) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
+
+    public User(String email, String password, boolean isAdmin) {
+        this.email = email;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -13,8 +30,12 @@ public class User {
         this.password = password;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public int getId() {
@@ -25,16 +46,21 @@ public class User {
         return password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", isAdmin=" + isAdmin +
                 '}';
     }
 }
