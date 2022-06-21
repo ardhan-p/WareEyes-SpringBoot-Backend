@@ -7,15 +7,19 @@ This repository contains the backend section.
 
 https://docs.spring.io/spring-kafka/docs/current/reference/html/
 
-## Kafka Terminal Commands
-- To start zookeeper:
+## Initialisation Guide
+(note: these are the commands to initialise a new Kafka cluster via localhost, it must be done in sequence)
 
-bin/zookeeper-server-start.sh config/zookeeper.properties
+1. Start Kafka zookeeper (on a new terminal shell)
 
-- To start server:
+**bin/zookeeper-server-start.sh config/zookeeper.properties**
 
-bin/kafka-server-start.sh config/server.properties
+2. Start Kafka server (on a new terminal shell)
 
-- CLI commands:
+**bin/kafka-server-start.sh config/server.properties**
 
-https://www.conduktor.io/kafka/kafka-topics-cli-tutorial
+3. Clone the repository using IntelliJ IDE 
+
+4. Build and run application
+
+5. Backend application should run and the APIs should be correctly initialised for use

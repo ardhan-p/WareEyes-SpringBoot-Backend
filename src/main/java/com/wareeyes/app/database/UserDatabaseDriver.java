@@ -4,10 +4,8 @@ import com.wareeyes.app.kafka.KafkaConsumer;
 import com.wareeyes.app.userlogin.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
-import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +25,6 @@ public class UserDatabaseDriver {
             dataSource = ConfigDataSource.source();
             connection = dataSource.getConnection();
             prepStmnt = connection.prepareStatement(query);
-            BCryptPasswordEncoder pwEncoder = new BCryptPasswordEncoder();
 
             // set email
             prepStmnt.setString(1, user.getEmail());
@@ -41,11 +38,12 @@ public class UserDatabaseDriver {
             } else {
                 do {
                     dbUser = new User(rs.getString("email"), rs.getString("password"), rs.getBoolean("isAdmin"));
+                    user.setAdmin(rs.getBoolean("isAdmin"));
                 } while (rs.next());
             }
 
             // compares inputted password with hashed password
-            if (pwEncoder.matches(user.getPassword(), dbUser.getPassword())) {
+            if (user.getPassword().equals(dbUser.getPassword())) {
                 LOGGER.info(user.getEmail() + ": valid login!");
                 return true;
             } else {
@@ -54,6 +52,7 @@ public class UserDatabaseDriver {
             }
 
         } catch (SQLException e) {
+            LOGGER.info("Unable to check user!");
             e.printStackTrace();
         }
 
@@ -76,10 +75,8 @@ public class UserDatabaseDriver {
             // set email
             prepStmnt.setString(1, user.getEmail());
 
-            // set encrypted password
-            BCryptPasswordEncoder pwEncoder = new BCryptPasswordEncoder();
-            String encodedPassword = pwEncoder.encode(user.getPassword());
-            prepStmnt.setString(2, encodedPassword);
+            // set password
+            prepStmnt.setString(2, user.getPassword());
 
             // set role
             prepStmnt.setBoolean(3, user.isAdmin());

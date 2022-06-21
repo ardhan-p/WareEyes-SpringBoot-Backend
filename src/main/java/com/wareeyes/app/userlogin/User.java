@@ -8,7 +8,6 @@ public class User {
 
     public User() {
     }
-
     public User(int id, String email, String password, boolean isAdmin) {
         this.id = id;
         this.email = email;
@@ -20,6 +19,11 @@ public class User {
         this.email = email;
         this.password = password;
         this.isAdmin = isAdmin;
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     public void setId(int id) {
