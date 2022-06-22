@@ -16,7 +16,7 @@ public class LoginController {
     @Autowired
     UserDriverDB sql;
 
-    @PostMapping("/validate")
+    @PostMapping("/validateLogin")
     public boolean validateLogin(@RequestBody User user) {
         boolean validate = sql.checkLogin(user);
 
@@ -24,6 +24,19 @@ public class LoginController {
             LOGGER.info(user.getEmail() + " has logged in!");
         } else {
             LOGGER.info(user.getEmail() + " unsuccessful login!");
+        }
+
+        return validate;
+    }
+
+    @PostMapping("/validateEmail")
+    public boolean validateEmail(@RequestBody User user) {
+        boolean validate = sql.checkEmail(user);
+
+        if (validate) {
+            LOGGER.info(user.getEmail() + " is valid");
+        } else {
+            LOGGER.info(user.getEmail() + " is not valid");
         }
 
         return validate;
