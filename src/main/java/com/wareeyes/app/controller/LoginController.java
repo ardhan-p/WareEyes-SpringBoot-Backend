@@ -5,13 +5,9 @@ import com.wareeyes.app.userlogin.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
-
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/login")
 public class LoginController {
@@ -20,7 +16,7 @@ public class LoginController {
     @Autowired
     UserDriverDB sql;
 
-    @GetMapping("/validate")
+    @PostMapping("/validate")
     public boolean validateLogin(@RequestBody User user) {
         boolean validate = sql.checkLogin(user);
 

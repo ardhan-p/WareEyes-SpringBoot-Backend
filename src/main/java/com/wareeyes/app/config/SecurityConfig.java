@@ -1,4 +1,4 @@
-package com.wareeyes.app.security;
+package com.wareeyes.app.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +12,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests().anyRequest().authenticated()
+                .and()
+                .cors()
                 .and()
                 .httpBasic();
     }

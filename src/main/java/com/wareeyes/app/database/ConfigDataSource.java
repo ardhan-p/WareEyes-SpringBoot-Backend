@@ -15,9 +15,9 @@ public class ConfigDataSource {
 
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-        ds.setUrl("jdbc:mysql://localhost:3306/wareeyes-db");
-        ds.setUsername("root");
-        ds.setPassword("root");
+        ds.setUrl("jdbc:mysql://remotemysql.com:3306/jgKkyMewz1");
+        ds.setUsername("jgKkyMewz1");
+        ds.setPassword("Gur2O37z7C");
 
         return ds;
     }
