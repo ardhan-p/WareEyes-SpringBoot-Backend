@@ -4,20 +4,21 @@ import javax.sql.DataSource;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 public class ConfigDataSource {
 
     @Bean
-    public static DataSource source() {
+    public DataSource source() {
+        DriverManagerDataSource ds = new DriverManagerDataSource();
 
-        DataSourceBuilder<?> dsb = DataSourceBuilder.create();
-        dsb.driverClassName("com.mysql.cj.jdbc.Driver");
+        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-        dsb.url("jdbc:mysql://localhost:3306/wareeyes-db");
-        dsb.username("root");
-        dsb.password("root");
+        ds.setUrl("jdbc:mysql://localhost:3306/wareeyes-db");
+        ds.setUsername("root");
+        ds.setPassword("root");
 
-        return dsb.build();
+        return ds;
     }
 }
