@@ -26,6 +26,12 @@ public class UserDriverDB implements UserRepository {
     }
 
     @Override
+    public int resetPassword(User user) {
+        String query = "UPDATE USER SET password = ? WHERE email = ?";
+        return jdbcTemplate.update(query, user.getPassword(), user.getEmail());
+    }
+
+    @Override
     public int insertUser(User user) {
         String query = "INSERT INTO USER (email, name, password, isAdmin) VALUES (?, ?, ?, ?)";
         return jdbcTemplate.update(query, user.getEmail(), user.getName(), user.getPassword(), user.isAdmin());

@@ -6,6 +6,7 @@ public interface UserRepository {
 
     boolean checkLogin(User user);
     boolean checkEmail(User user);
+    int resetPassword(User user);
 
     int insertUser(User user);
 }

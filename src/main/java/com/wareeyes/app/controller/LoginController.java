@@ -42,5 +42,18 @@ public class LoginController {
         return validate;
     }
 
+    @PostMapping("/updatePassword")
+    public int updatePassword(@RequestBody User user){
+        int validate = sql.resetPassword(user);
+
+        if (validate == 1) {
+            LOGGER.info("Password " + user.getPassword() + " has changed successfully");
+        } else {
+            LOGGER.info("Password " + user.getPassword() + " has failed to change ");
+        }
+
+        return validate;
+    }
+
     // TODO: add api for adding users
 }
