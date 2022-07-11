@@ -1,6 +1,4 @@
 package com.wareeyes.app.userlogin;
-
-
 public class User {
     private int id;
     private String email;
