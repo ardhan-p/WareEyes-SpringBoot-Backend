@@ -10,12 +10,12 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class KafkaProducer {
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
+public class KafkaProducerService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducerService.class);
 
     private KafkaTemplate<String, User> kafkaTemplate;
 
-    public KafkaProducer(KafkaTemplate<String, User> kafkaTemplate) {
+    public KafkaProducerService(KafkaTemplate<String, User> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
