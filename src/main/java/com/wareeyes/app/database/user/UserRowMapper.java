@@ -1,4 +1,4 @@
-package com.wareeyes.app.database;
+package com.wareeyes.app.database.user;
 
 import com.wareeyes.app.entity.User;
 import org.springframework.jdbc.core.RowMapper;

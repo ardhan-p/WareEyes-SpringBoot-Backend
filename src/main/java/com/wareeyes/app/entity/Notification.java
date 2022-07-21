@@ -6,13 +6,13 @@ import java.time.LocalTime;
 public class Notification {
     private long id;
     private String message;
-    private LocalDate date;
-    private LocalTime time;
+    private String date;
+    private String time;
 
     public Notification() {
     }
 
-    public Notification(long id, String message, LocalDate date, LocalTime time) {
+    public Notification(long id, String message, String date, String time) {
         this.id = id;
         this.message = message;
         this.date = date;
@@ -22,8 +22,8 @@ public class Notification {
     public Notification(long id, String message) {
         this.id = id;
         this.message = message;
-        this.date = LocalDate.now();
-        this.time = LocalTime.now();
+        this.date = LocalDate.now().toString();
+        this.time = LocalTime.now().toString();
     }
 
     public long getId() {
@@ -34,11 +34,11 @@ public class Notification {
         return message;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public LocalTime getTime() {
+    public String getTime() {
         return time;
     }
 
@@ -50,11 +50,11 @@ public class Notification {
         this.message = message;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public void setTime(LocalTime time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
