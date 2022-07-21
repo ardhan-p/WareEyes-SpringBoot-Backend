@@ -1,7 +1,7 @@
 package com.wareeyes.app.controller;
 
 import com.wareeyes.app.database.UserDriverDB;
-import com.wareeyes.app.userlogin.User;
+import com.wareeyes.app.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

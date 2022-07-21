@@ -1,6 +1,6 @@
 package com.wareeyes.app.database;
 
-import com.wareeyes.app.userlogin.User;
+import com.wareeyes.app.entity.User;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

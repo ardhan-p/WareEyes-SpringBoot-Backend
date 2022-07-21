@@ -1,12 +1,10 @@
-package com.wareeyes.app.notification;
+package com.wareeyes.app.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Notification {
     private long id;
-    private long thresholdValue;
-    private String dataset;
     private String message;
     private LocalDate date;
     private LocalTime time;
@@ -14,19 +12,15 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(long id, long thresholdValue, String dataset, String message, LocalDate date, LocalTime time) {
+    public Notification(long id, String message, LocalDate date, LocalTime time) {
         this.id = id;
-        this.thresholdValue = thresholdValue;
-        this.dataset = dataset;
         this.message = message;
         this.date = date;
         this.time = time;
     }
 
-    public Notification(long id, long thresholdValue, String dataset, String message) {
+    public Notification(long id, String message) {
         this.id = id;
-        this.thresholdValue = thresholdValue;
-        this.dataset = dataset;
         this.message = message;
         this.date = LocalDate.now();
         this.time = LocalTime.now();
@@ -34,14 +28,6 @@ public class Notification {
 
     public long getId() {
         return id;
-    }
-
-    public long getThresholdValue() {
-        return thresholdValue;
-    }
-
-    public String getDataset() {
-        return dataset;
     }
 
     public String getMessage() {
@@ -60,14 +46,6 @@ public class Notification {
         this.id = id;
     }
 
-    public void setThresholdValue(long thresholdValue) {
-        this.thresholdValue = thresholdValue;
-    }
-
-    public void setDataset(String dataset) {
-        this.dataset = dataset;
-    }
-
     public void setMessage(String message) {
         this.message = message;
     }
@@ -84,8 +62,6 @@ public class Notification {
     public String toString() {
         return "Notification{" +
                 "id=" + id +
-                ", thresholdValue=" + thresholdValue +
-                ", dataset='" + dataset + '\'' +
                 ", message='" + message + '\'' +
                 ", date=" + date +
                 ", time=" + time +

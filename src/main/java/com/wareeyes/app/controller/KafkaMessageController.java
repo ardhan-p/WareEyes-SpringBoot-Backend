@@ -1,7 +1,7 @@
 package com.wareeyes.app.controller;
 
 import com.wareeyes.app.kafka.KafkaProducerService;
-import com.wareeyes.app.userlogin.User;
+import com.wareeyes.app.entity.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +16,8 @@ public class KafkaMessageController {
 
     // http://localhost:8080/api/kafka/publish
     @PostMapping("/publish")
-    public ResponseEntity publish(@RequestBody User user) {
-        kafkaProducerService.sendMessage(user);
+    public ResponseEntity publish(@RequestBody Object obj) {
+        kafkaProducerService.sendMessage(obj);
         return ResponseEntity.ok("Kafka message sent to topic");
     }
 }

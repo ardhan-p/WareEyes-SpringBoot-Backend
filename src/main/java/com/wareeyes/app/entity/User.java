@@ -1,6 +1,6 @@
-package com.wareeyes.app.userlogin;
+package com.wareeyes.app.entity;
 public class User {
-    private int id;
+    private long id;
     private String email;
     private String name;
     private String password;
@@ -8,7 +8,7 @@ public class User {
 
     public User() {
     }
-    public User(int id, String email, String name, String password, boolean isAdmin) {
+    public User(long id, String email, String name, String password, boolean isAdmin) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -38,7 +38,7 @@ public class User {
         this.email = email;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -58,7 +58,7 @@ public class User {
         isAdmin = admin;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

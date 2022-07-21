@@ -1,6 +1,6 @@
 package com.wareeyes.app.kafka;
 
-import com.wareeyes.app.userlogin.User;
+import com.wareeyes.app.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -19,13 +19,13 @@ public class KafkaProducerService {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendMessage(User user) {
-        Message<User> message = MessageBuilder
-                .withPayload(user)
+    public void sendMessage(Object obj) {
+        Message<Object> message = MessageBuilder
+                .withPayload(obj)
                 .setHeader(KafkaHeaders.TOPIC, "testTopic")
                 .build();
 
-        LOGGER.info("Message sent: " + user.toString());
+        LOGGER.info("Message sent: " + obj.toString());
         kafkaTemplate.send(message);
     }
 }
