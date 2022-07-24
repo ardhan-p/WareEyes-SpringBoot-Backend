@@ -14,11 +14,11 @@ public class LoginController {
     private final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
-    UserDriverDB sql;
+    UserDriverDB db;
 
     @PostMapping("/validateLogin")
     public boolean validateLogin(@RequestBody User user) {
-        boolean validate = sql.checkLogin(user);
+        boolean validate = db.checkLogin(user);
 
         if (validate) {
             LOGGER.info(user.getEmail() + " has logged in!");
@@ -31,7 +31,7 @@ public class LoginController {
 
     @PostMapping("/validateEmail")
     public boolean validateEmail(@RequestBody User user) {
-        boolean validate = sql.checkEmail(user);
+        boolean validate = db.checkEmail(user);
 
         if (validate) {
             LOGGER.info(user.getEmail() + " is valid");
@@ -44,7 +44,7 @@ public class LoginController {
 
     @PostMapping("/updatePassword")
     public int updatePassword(@RequestBody User user){
-        int validate = sql.resetPassword(user);
+        int validate = db.resetPassword(user);
 
         if (validate == 1) {
             LOGGER.info("Password " + user.getPassword() + " has changed successfully");
