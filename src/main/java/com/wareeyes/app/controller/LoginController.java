@@ -55,5 +55,9 @@ public class LoginController {
         return validate;
     }
 
+    @GetMapping("/")
+    public int accessAPI() {
+        return 1;
+    }
     // TODO: add api for adding users
 }
