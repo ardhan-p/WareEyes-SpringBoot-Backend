@@ -55,9 +55,10 @@ public class LoginController {
         return validate;
     }
 
-    @GetMapping("/")
-    public int accessAPI() {
-        return 1;
+    @GetMapping("/getUser/{email}")
+    public User accessAPI(@PathVariable String email) {
+        User searchedUser = db.getUser(email);
+        return searchedUser;
     }
     // TODO: add api for adding users
 }

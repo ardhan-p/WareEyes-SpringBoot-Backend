@@ -12,9 +12,16 @@ public class UserDriverDB {
     private JdbcTemplate jdbcTemplate;
 
     public boolean checkLogin(User user) {
-        String query = "SELECT * FROM USER WHERE email = ?";
-        User dbUser = jdbcTemplate.queryForObject(query, new UserRowMapper(), user.getEmail());
-        return dbUser.getPassword().equals(user.getPassword());
+        String query = "SELECT * FROM USER WHERE email = ? AND isAdmin = ?";
+        try {
+            User dbUser = jdbcTemplate.queryForObject(query, new UserRowMapper(), user.getEmail(), user.isAdmin());
+            System.out.println(user);
+            return dbUser.getPassword().equals(user.getPassword());
+        } catch (Exception e) {
+            System.out.println("Caught exception");
+            System.out.println(user);
+            return false;
+        }
     }
 
     public boolean checkEmail(User user) {
@@ -31,5 +38,16 @@ public class UserDriverDB {
     public int insertUser(User user) {
         String query = "INSERT INTO USER (email, name, password, isAdmin) VALUES (?, ?, ?, ?)";
         return jdbcTemplate.update(query, user.getEmail(), user.getName(), user.getPassword(), user.isAdmin());
+    }
+
+    public User getUser(String email) {
+        String query = "SELECT * FROM USER WHERE email = ?";
+        try {
+            User dbUser = jdbcTemplate.queryForObject(query, new UserRowMapper(), email);
+            dbUser.setPassword("");
+            return dbUser;
+        } catch (Exception e) {
+            return new User();
+        }
     }
 }
