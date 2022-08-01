@@ -18,6 +18,12 @@ public class Topic {
         this.replicationFactor = replicationFactor;
     }
 
+    public Topic(String name, long partitions, long replicationFactor) {
+        this.name = name;
+        this.partitions = partitions;
+        this.replicationFactor = replicationFactor;
+    }
+
     public Topic(long id, String name, long threshold) {
         this.id = id;
         this.name = name;
