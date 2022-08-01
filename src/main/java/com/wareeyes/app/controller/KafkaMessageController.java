@@ -26,7 +26,15 @@ public class KafkaMessageController {
     public boolean createTopic(@RequestBody Topic topic) {
         return kafkaTopicService.createTopic(topic.getName(), (int) topic.getPartitions(), (short) topic.getReplicationFactor());
     }
+    @PostMapping("/deleteTopic")
+    public boolean deleteTopic(@RequestBody Topic topic) {
+        return kafkaTopicService.deleteTopic(topic.getName());
+    }
 
+    @PostMapping("/modifyTopic")
+    public boolean modifyTopic(@RequestBody Topic topic) {
+        return kafkaTopicService.modifyTopic(topic.getName(), (int) topic.getPartitions(), (short) topic.getReplicationFactor());
+    }
 
     @PostMapping("/publish")
     public ResponseEntity publish(@RequestBody Object obj) {

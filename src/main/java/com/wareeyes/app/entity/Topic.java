@@ -18,6 +18,10 @@ public class Topic {
         this.replicationFactor = replicationFactor;
     }
 
+    public Topic(String name) {
+        this.name = name;
+    }
+
     public Topic(String name, long partitions, long replicationFactor) {
         this.name = name;
         this.partitions = partitions;
