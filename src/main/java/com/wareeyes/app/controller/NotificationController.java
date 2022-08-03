@@ -36,4 +36,10 @@ public class NotificationController {
         return insert;
     }
 
+    @PostMapping("/delete")
+    public int deleteNotifications(@RequestBody List<Notification> notiList) {
+        int result = db.deleteNotifications(notiList);
+        return result;
+    }
+
 }

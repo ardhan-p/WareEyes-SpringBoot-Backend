@@ -18,6 +18,19 @@ public class NotificationDriverDB {
         return jdbcTemplate.update(query, noti.getMessage(), noti.getDate(), noti.getTime());
     }
 
+    public int deleteNotifications(List<Notification> notiList) {
+        String query = "DELETE FROM NOTIFICATION WHERE ID = ?";
+        try {
+            for (Notification noti : notiList) {
+                System.out.println(noti);
+                int result = jdbcTemplate.update(query, noti.getId());
+            }
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
     public List<Notification> selectAllNotifications() {
         String query = "SELECT * FROM NOTIFICATION";
         List<Notification> list = jdbcTemplate.query(query, new NotificationRowMapper());

@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/login")
@@ -55,10 +57,40 @@ public class LoginController {
         return validate;
     }
 
+    @GetMapping("/getUser")
+    public List<User> getAllUsers() {
+        return db.selectAllUsers();
+    }
+
     @GetMapping("/getUser/{email}")
-    public User accessAPI(@PathVariable String email) {
+    public User getUser(@PathVariable String email) {
         User searchedUser = db.getUser(email);
         return searchedUser;
     }
-    // TODO: add api for adding users
+
+    @PostMapping("/addUser")
+    public int addUser(@RequestBody User user) {
+        int result = db.insertUser(user);
+
+        if (result == 1) {
+            LOGGER.info("User " + user.getEmail() + " has been added successfully");
+        } else {
+            LOGGER.info("User " + user.getEmail() + " cannot be added, already exists");
+        }
+
+        return result;
+    }
+
+//    @PostMapping("/deleteUsers")
+//    public int deleteUser(@RequestBody List<User> userList) {
+//        int result = db.deleteUser(user);
+//
+//        if (result == 1) {
+//            LOGGER.info("User " + user.getEmail() + " has been deleted successfully");
+//        } else {
+//            LOGGER.info("User " + user.getEmail() + " cannot be deleted, does not exist");
+//        }
+//
+//        return result;
+//    }
 }

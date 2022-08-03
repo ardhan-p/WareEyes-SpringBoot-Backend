@@ -1,9 +1,13 @@
 package com.wareeyes.app.database.user;
 
+import com.wareeyes.app.database.notification.NotificationRowMapper;
+import com.wareeyes.app.entity.Notification;
 import com.wareeyes.app.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class UserDriverDB {
@@ -37,7 +41,21 @@ public class UserDriverDB {
 
     public int insertUser(User user) {
         String query = "INSERT INTO USER (email, name, password, isAdmin) VALUES (?, ?, ?, ?)";
-        return jdbcTemplate.update(query, user.getEmail(), user.getName(), user.getPassword(), user.isAdmin());
+        try {
+            return jdbcTemplate.update(query, user.getEmail(), user.getName(), user.getPassword(), user.isAdmin());
+        } catch (Exception e){
+            return 0;
+        }
+    }
+
+    //TODO: add delete user JDBC function
+    public int deleteUsers(List<User> userList) {
+        String query = "DELETE FROM USER WHERE email = ?";
+        try {
+            return 1;
+        } catch (Exception e){
+            return 0;
+        }
     }
 
     public User getUser(String email) {
@@ -49,5 +67,16 @@ public class UserDriverDB {
         } catch (Exception e) {
             return new User();
         }
+    }
+
+    public List<User> selectAllUsers() {
+        String query = "SELECT * FROM USER";
+        List<User> list = jdbcTemplate.query(query, new UserRowMapper());
+
+        for (User u : list) {
+            u.setPassword("");
+        }
+
+        return list;
     }
 }
