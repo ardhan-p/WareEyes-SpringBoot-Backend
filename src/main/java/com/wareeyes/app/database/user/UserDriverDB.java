@@ -48,12 +48,15 @@ public class UserDriverDB {
         }
     }
 
-    //TODO: add delete user JDBC function
     public int deleteUsers(List<User> userList) {
         String query = "DELETE FROM USER WHERE email = ?";
         try {
+            for (User user : userList) {
+                System.out.println(user);
+                int result = jdbcTemplate.update(query, user.getEmail());
+            }
             return 1;
-        } catch (Exception e){
+        } catch (Exception e) {
             return 0;
         }
     }

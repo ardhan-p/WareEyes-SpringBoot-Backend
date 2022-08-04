@@ -41,5 +41,4 @@ public class NotificationController {
         int result = db.deleteNotifications(notiList);
         return result;
     }
-
 }

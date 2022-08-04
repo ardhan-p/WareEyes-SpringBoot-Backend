@@ -1,6 +1,7 @@
 package com.wareeyes.app.controller;
 
 import com.wareeyes.app.database.user.UserDriverDB;
+import com.wareeyes.app.entity.Notification;
 import com.wareeyes.app.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,16 +82,9 @@ public class LoginController {
         return result;
     }
 
-//    @PostMapping("/deleteUsers")
-//    public int deleteUser(@RequestBody List<User> userList) {
-//        int result = db.deleteUser(user);
-//
-//        if (result == 1) {
-//            LOGGER.info("User " + user.getEmail() + " has been deleted successfully");
-//        } else {
-//            LOGGER.info("User " + user.getEmail() + " cannot be deleted, does not exist");
-//        }
-//
-//        return result;
-//    }
+    @PostMapping("/deleteUsers")
+    public int deleteUser(@RequestBody List<User> userList) {
+        int result = db.deleteUsers(userList);
+        return result;
+    }
 }
