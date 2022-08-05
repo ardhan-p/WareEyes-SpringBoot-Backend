@@ -32,14 +32,14 @@ public class KafkaConsumerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerService.class);
 
 
-//    @KafkaListener(topics = "testTopic")
-//    public void consumeMessage(@Payload String msg) {
-//        if (isNumber(msg)) {
-//
-//            template.convertAndSend("/topic/testTheTopic", msg);
-//        }
-//        LOGGER.info("Message received: " + msg);
-//    }
+    @KafkaListener(topics = "testTopic")
+    public void consumeMessage(@Payload String msg) {
+        if (isNumber(msg)) {
+
+            template.convertAndSend("/topic/testTopic", msg);
+        }
+        LOGGER.info("Message received: " + msg);
+    }
 
     public boolean createConsumer(String topic) {
         try {
