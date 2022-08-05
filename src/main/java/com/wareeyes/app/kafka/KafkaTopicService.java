@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 @Service
 public class KafkaTopicService {
@@ -23,6 +21,7 @@ public class KafkaTopicService {
         }
     }
 
+    // TODO: add SQL statements here to update database data as well
     public boolean createTopic(String topicName, int partitions, short replicationFactor) {
         try {
             getAdminClient();
@@ -67,16 +66,16 @@ public class KafkaTopicService {
         }
     }
 
-    public boolean listTopics() {
+    public Set<String> listTopics() {
         try {
             getAdminClient();
             ListTopicsResult topics = client.listTopics();
-            topics.names().get().forEach(System.out::println);
-            return true;
+            System.out.println(topics.names().get());
+            return topics.names().get();
         } catch (Exception e) {
             System.err.println(e);
             client.close();
-            return false;
+            return null;
         }
     }
 }

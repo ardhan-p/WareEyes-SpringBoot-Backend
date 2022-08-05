@@ -16,14 +16,14 @@ public class AppApplication {
 		SpringApplication.run(AppApplication.class, args);
 	}
 
-//	@Bean
-//	CommandLineRunner clr(KafkaTemplate<String, String> kafkaTemplate) {
-//		return args -> {
-//			while(true) {
-//				TimeUnit.SECONDS.sleep(2);
-//				int rand = (int)(Math.random() * 100) + 1;
-//				kafkaTemplate.send("testTopic", "" + rand);
-//			}
-//		};
-//	}
+	@Bean
+	CommandLineRunner clr(KafkaTemplate<String, String> kafkaTemplate) {
+		return args -> {
+			while(true) {
+				TimeUnit.SECONDS.sleep(2);
+				int rand = (int)(Math.random() * 100) + 1;
+				kafkaTemplate.send("testTopic", "" + rand);
+			}
+		};
+	}
 }

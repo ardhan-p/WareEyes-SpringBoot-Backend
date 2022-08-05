@@ -10,7 +10,6 @@ import org.springframework.kafka.core.KafkaAdmin;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: find a way to programitcally create new kafka topics
 // kafka topic config class is needed to create new kafka topics
 @Configuration
 public class KafkaTopicConfig {
