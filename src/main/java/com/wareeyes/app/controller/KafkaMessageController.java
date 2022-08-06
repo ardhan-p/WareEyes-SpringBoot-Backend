@@ -3,12 +3,12 @@ package com.wareeyes.app.controller;
 import com.wareeyes.app.entity.Topic;
 import com.wareeyes.app.kafka.KafkaConsumerService;
 import com.wareeyes.app.kafka.KafkaProducerService;
-import com.wareeyes.app.entity.User;
 import com.wareeyes.app.kafka.KafkaTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -26,6 +26,12 @@ public class KafkaMessageController {
     @GetMapping("/get")
     public Set<String> getTopics() {
         return kafkaTopicService.listTopics();
+    }
+
+    // TODO: add API to get request topic information
+    @GetMapping("/get/{topic}")
+    public Map<String, Object> getTopicInfo() {
+        return null;
     }
 
     @PostMapping("/createTopic")
@@ -49,8 +55,11 @@ public class KafkaMessageController {
     }
 
     @PostMapping("/publish")
-    public ResponseEntity publish(@RequestBody Object obj) {
-        kafkaProducerService.sendMessage(obj);
-        return ResponseEntity.ok("Kafka message sent to topic");
+    public ResponseEntity publish(@RequestBody Map<String, Object> obj) {
+////        kafkaProducerService.sendMessage(obj);
+//        System.out.println(obj.keySet());
+//        System.out.println(obj.values());
+//        System.out.println(obj.get("name"));
+        return ResponseEntity.ok("Kafka message sent to topic - " + obj);
     }
 }
