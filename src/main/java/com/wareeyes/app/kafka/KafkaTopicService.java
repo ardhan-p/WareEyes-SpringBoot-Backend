@@ -13,6 +13,9 @@ public class KafkaTopicService {
     @Autowired
     private KafkaAdmin admin;
 
+    @Autowired
+    private KafkaConsumerService consumerService;
+
     private AdminClient client;
 
     private void getAdminClient() {
@@ -22,12 +25,14 @@ public class KafkaTopicService {
     }
 
     // TODO: add SQL statements here to update database data as well
+    // TODO: create consumer alongside topic creation
     public boolean createTopic(String topicName, int partitions, short replicationFactor) {
         try {
             getAdminClient();
             NewTopic topic = new NewTopic(topicName, partitions, replicationFactor);
             CreateTopicsResult createTopicsResult = client.createTopics(Collections.singleton(topic));
             System.out.println("Created new topic: " + topicName + " Partitions: " + partitions + " Replication Factor: " + replicationFactor);
+            consumerService.createConsumer(topicName);
             return true;
         } catch (Exception e) {
             System.err.println(e);

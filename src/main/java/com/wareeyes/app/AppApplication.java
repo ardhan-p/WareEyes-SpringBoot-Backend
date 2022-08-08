@@ -22,7 +22,7 @@ public class AppApplication {
 //			while(true) {
 //				TimeUnit.SECONDS.sleep(2);
 //				int rand = (int)(Math.random() * 100) + 1;
-//				kafkaTemplate.send("testTopic", "" + rand);
+//				kafkaTemplate.send("Transactions", "" + rand);
 //			}
 //		};
 //	}

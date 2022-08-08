@@ -1,6 +1,7 @@
 package com.wareeyes.app.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,14 +32,34 @@ public class KafkaConsumerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerService.class);
 
+    @KafkaListener(topics = "Inventory-Quantity")
+    public void consumeInventoryQuantityMessage(@Payload Long msg) {
+        template.convertAndSend("/topic/Inventory-Quantity", msg);
+        LOGGER.info("Inventory quantity update received: " + msg);
+    }
 
-    @KafkaListener(topics = "testTopic")
-    public void consumeMessage(@Payload String msg) {
-        if (isNumber(msg)) {
+    @KafkaListener(topics = "Current-Number-Of-Employees")
+    public void consumeNumberEmployeesMessage(@Payload Long msg) {
+        template.convertAndSend("/topic/Current-Number-Of-Employees", msg);
+        LOGGER.info("Current amount of employees update received: " + msg);
+    }
 
-            template.convertAndSend("/topic/testTopic", msg);
-        }
-        LOGGER.info("Message received: " + msg);
+    @KafkaListener(topics = "Transactions-Completed")
+    public void consumeTransactionsMessage(@Payload Long msg) {
+        template.convertAndSend("/topic/Transactions-Completed", msg);
+        LOGGER.info("Current transaction data received: " + msg);
+    }
+
+    @KafkaListener(topics = "Deliveries-Sent")
+    public void consumeDeliveriesSentMessage(@Payload Long msg) {
+        template.convertAndSend("/topic/Deliveries-Sent", msg);
+        LOGGER.info("Deliveries sent data update received: " + msg);
+    }
+
+    @KafkaListener(topics = "Deliveries-Received")
+    public void consumeDeliveriesReceivedMessage(@Payload Long msg) {
+        template.convertAndSend("/topic/Deliveries-Received", msg);
+        LOGGER.info("Deliveries received data update received: " + msg);
     }
 
     public boolean createConsumer(String topic) {
@@ -46,14 +67,12 @@ public class KafkaConsumerService {
             ContainerProperties containerProps = new ContainerProperties(topic);
             String destination = "/topic/" + topic;
 
-            containerProps.setMessageListener((MessageListener<String, String>) message -> {
-                if (isNumber(message.value())) {
-                    template.convertAndSend(destination, message.value());
-                }
+            containerProps.setMessageListener((MessageListener<String, Long>) message -> {
+                template.convertAndSend(destination, message.value());
                 LOGGER.info("Custom msg received: " + message.value() + " - Topic: " + destination);
             });
 
-            KafkaMessageListenerContainer<String, String> container = createContainer(containerProps);
+            KafkaMessageListenerContainer<String, Long> container = createContainer(containerProps);
             container.setBeanName(topic);
             container.start();
             return true;
@@ -64,16 +83,16 @@ public class KafkaConsumerService {
         }
     }
 
-    private KafkaMessageListenerContainer<String, String> createContainer(ContainerProperties containerProps) {
+    private KafkaMessageListenerContainer<String, Long> createContainer(ContainerProperties containerProps) {
         Map<String, Object> props=new HashMap<String, Object>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "test-id");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
 
-        DefaultKafkaConsumerFactory<String, String> cf = new DefaultKafkaConsumerFactory<>(props);
-        KafkaMessageListenerContainer<String, String> container = new KafkaMessageListenerContainer<>(cf, containerProps);
+        DefaultKafkaConsumerFactory<String, Long> cf = new DefaultKafkaConsumerFactory<>(props);
+        KafkaMessageListenerContainer<String, Long> container = new KafkaMessageListenerContainer<>(cf, containerProps);
         return container;
     }
 

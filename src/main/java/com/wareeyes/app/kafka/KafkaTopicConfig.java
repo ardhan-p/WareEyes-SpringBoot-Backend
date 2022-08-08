@@ -22,7 +22,27 @@ public class KafkaTopicConfig {
     }
 
     @Bean
-    public NewTopic createTopic() {
-        return TopicBuilder.name("testTopic").build();
+    public NewTopic createInventoryQuantityTopic() {
+        return TopicBuilder.name("Inventory-Quantity").build();
+    }
+
+    @Bean
+    public NewTopic createNumberOfEmployeesTopic() {
+        return TopicBuilder.name("Current-Number-Of-Employees").build();
+    }
+
+    @Bean
+    public NewTopic createTransactionsCompletedTopic() {
+        return TopicBuilder.name("Transactions-Completed").build();
+    }
+
+    @Bean
+    public NewTopic createDeliverySentTopic() {
+        return TopicBuilder.name("Deliveries-Sent").build();
+    }
+
+    @Bean
+    public NewTopic createDeliveryReceivedTopic() {
+        return TopicBuilder.name("Deliveries-Received").build();
     }
 }

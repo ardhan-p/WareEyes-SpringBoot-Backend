@@ -1,5 +1,6 @@
 package com.wareeyes.app.controller;
 
+import com.wareeyes.app.entity.KafkaMessage;
 import com.wareeyes.app.entity.Topic;
 import com.wareeyes.app.kafka.KafkaConsumerService;
 import com.wareeyes.app.kafka.KafkaProducerService;
@@ -55,11 +56,9 @@ public class KafkaMessageController {
     }
 
     @PostMapping("/publish")
-    public ResponseEntity publish(@RequestBody Map<String, Object> obj) {
-////        kafkaProducerService.sendMessage(obj);
-//        System.out.println(obj.keySet());
-//        System.out.println(obj.values());
-//        System.out.println(obj.get("name"));
-        return ResponseEntity.ok("Kafka message sent to topic - " + obj);
+    public ResponseEntity publish(@RequestBody KafkaMessage msg) {
+        kafkaProducerService.sendMessage(msg);
+        System.out.println("Message sent: " + msg);
+        return ResponseEntity.ok("Kafka message sent to topic - " + msg);
     }
 }
