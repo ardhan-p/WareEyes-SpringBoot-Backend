@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.kafka.core.KafkaTemplate;
 
 
 import java.util.concurrent.TimeUnit;
@@ -17,14 +18,21 @@ public class AppApplication {
 		SpringApplication.run(AppApplication.class, args);
 	}
 
-//	@Bean
-//	CommandLineRunner clr(KafkaTemplate<String, String> kafkaTemplate) {
-//		return args -> {
-//			while(true) {
-//				TimeUnit.SECONDS.sleep(2);
-//				int rand = (int)(Math.random() * 100) + 1;
-//				kafkaTemplate.send("Transactions", "" + rand);
-//			}
-//		};
-//	}
+	@Bean
+	CommandLineRunner clr(KafkaTemplate<String, Long> kafkaTemplate) {
+		return args -> {
+			while(true) {
+				TimeUnit.SECONDS.sleep(2);
+				long rand1 = (long)(Math.random() * 200) + 1;
+				long rand2 = (long)(Math.random() * 200) + 1;
+				long rand3 = (long)(Math.random() * 10000) + 1;
+				long rand4 = (long)(Math.random() * 1000) + 1;
+
+				kafkaTemplate.send("Current-Number-Of-Employees", rand1);
+				kafkaTemplate.send("Deliveries-Sent", rand2);
+				kafkaTemplate.send("Inventory-Quantity", rand3);
+				kafkaTemplate.send("Transactions-Completed", rand4);
+			}
+		};
+	}
 }
