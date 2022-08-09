@@ -1,5 +1,6 @@
 package com.wareeyes.app.controller;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.wareeyes.app.database.topic.TopicDriverDB;
 import com.wareeyes.app.entity.KafkaMessage;
 import com.wareeyes.app.entity.Topic;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -32,8 +34,8 @@ public class KafkaMessageController {
     private final Logger LOGGER = LoggerFactory.getLogger(KafkaMessageController.class);
 
     @GetMapping("/get")
-    public Set<String> getTopics() {
-        return kafkaTopicService.listTopics();
+    public List<Topic> getTopics() {
+        return topicDriverDB.selectAllTopics();
     }
 
     @GetMapping("/getThreshold/{topic}")

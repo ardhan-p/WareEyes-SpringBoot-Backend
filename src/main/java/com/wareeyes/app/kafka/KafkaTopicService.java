@@ -29,7 +29,6 @@ public class KafkaTopicService {
         }
     }
 
-    // TODO: add SQL statements here to update database data as well
     public boolean createTopic(String topicName, int partitions, short replicationFactor, long threshold) {
         try {
             getAdminClient();
@@ -97,5 +96,9 @@ public class KafkaTopicService {
         } catch (Exception e) {
             return -1;
         }
+    }
+
+    public List<Topic> getAllTopicInfo() {
+        return db.selectAllTopics();
     }
 }
