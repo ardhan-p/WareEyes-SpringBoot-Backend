@@ -26,6 +26,12 @@ public class Notification {
         this.time = LocalTime.now().toString();
     }
 
+    public Notification(String message, String date, String time) {
+        this.message = message;
+        this.date = date;
+        this.time = time;
+    }
+
     public long getId() {
         return id;
     }

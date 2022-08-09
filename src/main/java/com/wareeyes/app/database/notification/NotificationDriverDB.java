@@ -14,7 +14,7 @@ public class NotificationDriverDB {
     private JdbcTemplate jdbcTemplate;
 
     public int insertNotification(Notification noti) {
-        String query = "INSERT INTO NOTIFICATION (message, date, time)";
+        String query = "INSERT INTO NOTIFICATION (message, date, time) VALUES (?, ?, ?)";
         return jdbcTemplate.update(query, noti.getMessage(), noti.getDate(), noti.getTime());
     }
 

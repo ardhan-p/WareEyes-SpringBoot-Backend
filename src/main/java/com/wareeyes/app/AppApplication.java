@@ -22,7 +22,7 @@ public class AppApplication {
 	CommandLineRunner clr(KafkaTemplate<String, Long> kafkaTemplate) {
 		return args -> {
 			while(true) {
-				TimeUnit.SECONDS.sleep(2);
+				TimeUnit.SECONDS.sleep(3);
 				long rand1 = (long)(Math.random() * 200) + 1;
 				long rand2 = (long)(Math.random() * 200) + 1;
 				long rand3 = (long)(Math.random() * 10000) + 1;
