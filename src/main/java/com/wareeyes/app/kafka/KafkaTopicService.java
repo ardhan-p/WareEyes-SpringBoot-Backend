@@ -1,5 +1,7 @@
 package com.wareeyes.app.kafka;
 
+import com.wareeyes.app.database.topic.TopicDriverDB;
+import com.wareeyes.app.entity.Topic;
 import org.apache.kafka.clients.admin.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaAdmin;
@@ -17,6 +19,9 @@ public class KafkaTopicService {
     private KafkaConsumerService consumerService;
 
     private AdminClient client;
+
+    @Autowired
+    private TopicDriverDB db;
 
     private void getAdminClient() {
         if (client == null) {
@@ -57,7 +62,7 @@ public class KafkaTopicService {
         }
     }
 
-    public boolean modifyTopic(String topicName, int partitions, short replicationFactor) {
+    public boolean modifyTopic(String topicName, int partitions, short replicationFactor, long threshold) {
         try {
             getAdminClient();
             NewTopic topic = new NewTopic(topicName, partitions, replicationFactor);
@@ -81,6 +86,15 @@ public class KafkaTopicService {
             System.err.println(e);
             client.close();
             return null;
+        }
+    }
+
+    public int getTopicThreshold(String topicName) {
+        Topic newTopic = new Topic(topicName);
+        try {
+            return db.getTopicThreshold(newTopic);
+        } catch (Exception e) {
+            return -1;
         }
     }
 }

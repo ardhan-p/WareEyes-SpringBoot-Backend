@@ -18,6 +18,11 @@ public class Topic {
         this.replicationFactor = replicationFactor;
     }
 
+    public Topic(String name, long threshold) {
+        this.name = name;
+        this.threshold = threshold;
+    }
+
     public Topic(String name) {
         this.name = name;
     }

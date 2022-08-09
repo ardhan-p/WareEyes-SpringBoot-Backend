@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.ConsumerSeekAware;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 import org.springframework.kafka.listener.MessageListener;
@@ -19,8 +20,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
-
-// TODO: add functionality for consumer to convert and send data to websocket
 @Service
 public class KafkaConsumerService {
 
@@ -89,11 +88,15 @@ public class KafkaConsumerService {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "test-id");
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         DefaultKafkaConsumerFactory<String, Long> cf = new DefaultKafkaConsumerFactory<>(props);
         KafkaMessageListenerContainer<String, Long> container = new KafkaMessageListenerContainer<>(cf, containerProps);
         return container;
+    }
+
+    public void createOffsetConsumer() {
+
     }
 
     public boolean isNumber(String str) {

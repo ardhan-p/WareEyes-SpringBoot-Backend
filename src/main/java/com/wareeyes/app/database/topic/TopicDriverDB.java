@@ -18,9 +18,11 @@ public class TopicDriverDB {
         return jdbcTemplate.update(query, topic.getName(), topic.getThreshold(), topic.getPartitions(), topic.getReplicationFactor());
     }
 
-//    public int deleteTopic(Topic topic) {
-//
-//    }
+    public int getTopicThreshold(Topic topic) {
+        String query = "SELECT * FROM TOPIC WHERE name = ?";
+        Topic newTopic = jdbcTemplate.queryForObject(query, new TopicRowMapper(), topic.getName());
+        return (int) newTopic.getThreshold();
+    }
 
     public List<Topic> selectAllTopics() {
         String query = "SELECT * FROM TOPIC";
