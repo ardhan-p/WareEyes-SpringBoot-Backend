@@ -18,6 +18,11 @@ public class TopicDriverDB {
         return jdbcTemplate.update(query, topic.getName(), topic.getThreshold(), topic.getPartitions(), topic.getReplicationFactor());
     }
 
+    public int modifyTopic(Topic topic) {
+        String query = "UPDATE TOPIC SET threshold = ?, partitions = ?, replicationFactor = ? WHERE name = ?";
+        return jdbcTemplate.update(query, topic.getThreshold(), topic.getPartitions(), topic.getReplicationFactor(), topic.getName());
+    }
+
     public int getTopicThreshold(Topic topic) {
         String query = "SELECT * FROM TOPIC WHERE name = ?";
         Topic newTopic = jdbcTemplate.queryForObject(query, new TopicRowMapper(), topic.getName());

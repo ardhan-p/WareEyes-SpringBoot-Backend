@@ -30,13 +30,13 @@ public class KafkaTopicService {
     }
 
     // TODO: add SQL statements here to update database data as well
-    // TODO: create consumer alongside topic creation
-    public boolean createTopic(String topicName, int partitions, short replicationFactor) {
+    public boolean createTopic(String topicName, int partitions, short replicationFactor, long threshold) {
         try {
             getAdminClient();
             NewTopic topic = new NewTopic(topicName, partitions, replicationFactor);
             CreateTopicsResult createTopicsResult = client.createTopics(Collections.singleton(topic));
-            System.out.println("Created new topic: " + topicName + " Partitions: " + partitions + " Replication Factor: " + replicationFactor);
+            db.insertTopic(new Topic(topicName, partitions, replicationFactor, threshold));
+            System.out.println("Created new topic: " + topicName + " Partitions: " + partitions + " Replication Factor: " + replicationFactor + " Threshold: " + threshold);
             consumerService.createConsumer(topicName);
             return true;
         } catch (Exception e) {
@@ -67,6 +67,7 @@ public class KafkaTopicService {
             getAdminClient();
             NewTopic topic = new NewTopic(topicName, partitions, replicationFactor);
             admin.createOrModifyTopics(topic);
+            db.modifyTopic(new Topic(topicName, partitions, replicationFactor, threshold));
             System.out.println("Modified topic: " + topicName + " Partitions: " + partitions + " Replication Factor: " + replicationFactor);
             return true;
         } catch (Exception e){

@@ -46,7 +46,7 @@ public class KafkaMessageController {
     @PostMapping("/createTopic")
     public boolean createTopic(@RequestBody Topic topic) {
         int insertToSQL = topicDriverDB.insertTopic(topic);
-        boolean createKafkaTopic = kafkaTopicService.createTopic(topic.getName(), (int) topic.getPartitions(), (short) topic.getReplicationFactor());
+        boolean createKafkaTopic = kafkaTopicService.createTopic(topic.getName(), (int) topic.getPartitions(), (short) topic.getReplicationFactor(), topic.getThreshold());
         boolean createKafkaConsumer = kafkaConsumerService.createConsumer(topic.getName());
 
         if (insertToSQL == 1 && createKafkaTopic == true && createKafkaConsumer == true) {

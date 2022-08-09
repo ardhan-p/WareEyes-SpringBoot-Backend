@@ -9,20 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.listener.ConsumerSeekAware;
-import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.kafka.listener.KafkaMessageListenerContainer;
-import org.springframework.kafka.listener.MessageListener;
+import org.springframework.kafka.listener.*;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class KafkaConsumerService {
-
     @Autowired
     SimpMessagingTemplate template;
 
@@ -31,9 +30,14 @@ public class KafkaConsumerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerService.class);
 
+    private Map<LocalDateTime, Long> inventoryQuantityMap = new HashMap<>();
+
     @KafkaListener(topics = "Inventory-Quantity")
     public void consumeInventoryQuantityMessage(@Payload Long msg) {
         template.convertAndSend("/topic/Inventory-Quantity", msg);
+        inventoryQuantityMap.put(LocalDateTime.now(), msg);
+
+        System.out.println(inventoryQuantityMap);
         LOGGER.info("Inventory quantity update received: " + msg);
     }
 
@@ -97,15 +101,5 @@ public class KafkaConsumerService {
 
     public void createOffsetConsumer() {
 
-    }
-
-    public boolean isNumber(String str) {
-        try {
-            @SuppressWarnings("unused")
-            double d = Double.parseDouble(str);
-        } catch(NumberFormatException nfe) {
-            return false;
-        }
-        return true;
     }
 }

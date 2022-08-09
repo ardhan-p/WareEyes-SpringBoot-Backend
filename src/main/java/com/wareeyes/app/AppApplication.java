@@ -5,13 +5,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.kafka.annotation.EnableKafkaStreams;
-import org.springframework.kafka.core.KafkaAdmin;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.context.annotation.ComponentScan;
+
 
 import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
+@ComponentScan
 public class AppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AppApplication.class, args);
