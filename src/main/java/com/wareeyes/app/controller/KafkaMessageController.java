@@ -38,6 +38,11 @@ public class KafkaMessageController {
         return topicDriverDB.selectAllTopics();
     }
 
+    @GetMapping("/getTopicList")
+    public Set<String> getTopicList() {
+        return kafkaTopicService.listTopics();
+    }
+
     @GetMapping("/getThreshold/{topic}")
     public int getTopicInfo(@PathVariable("topic") String topicName) {
         int result = topicDriverDB.getTopicThreshold(new Topic(topicName));
