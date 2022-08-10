@@ -66,7 +66,7 @@ public class KafkaTopicService {
             getAdminClient();
             NewTopic topic = new NewTopic(topicName, partitions, replicationFactor);
             admin.createOrModifyTopics(topic);
-            db.modifyTopic(new Topic(topicName, partitions, replicationFactor, threshold));
+            db.modifyTopic(new Topic(topicName, threshold, partitions, replicationFactor));
             System.out.println("Modified topic: " + topicName + " Partitions: " + partitions + " Replication Factor: " + replicationFactor);
             return true;
         } catch (Exception e){

@@ -14,12 +14,13 @@ public class TopicDriverDB {
     private JdbcTemplate jdbcTemplate;
 
     public int insertTopic(Topic topic) {
-        String query = "INSERT INTO TOPIC (name, threshold, partitions, replicationFactor)";
+        String query = "INSERT INTO TOPIC  (name, threshold, partitions, replicationFactor) VALUES (?, ?, ?, ?)";
         return jdbcTemplate.update(query, topic.getName(), topic.getThreshold(), topic.getPartitions(), topic.getReplicationFactor());
     }
 
     public int modifyTopic(Topic topic) {
         String query = "UPDATE TOPIC SET threshold = ?, partitions = ?, replicationFactor = ? WHERE name = ?";
+        System.out.println(topic);
         return jdbcTemplate.update(query, topic.getThreshold(), topic.getPartitions(), topic.getReplicationFactor(), topic.getName());
     }
 
