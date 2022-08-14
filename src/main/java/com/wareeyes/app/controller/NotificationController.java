@@ -5,6 +5,7 @@ import com.wareeyes.app.entity.Notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +35,11 @@ public class NotificationController {
         }
 
         return insert;
+    }
+
+    @PostMapping("/fetchTopicData")
+    public List<Notification> fetchTopicData(@RequestBody Notification noti) {
+        return db.selectTopicDataByDate(noti.getMessage(), noti.getDate());
     }
 
     @PostMapping("/delete")

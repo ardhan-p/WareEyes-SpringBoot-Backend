@@ -2,10 +2,13 @@ package com.wareeyes.app.database.notification;
 
 import com.wareeyes.app.entity.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.Not;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class NotificationDriverDB {
@@ -35,5 +38,19 @@ public class NotificationDriverDB {
         String query = "SELECT * FROM NOTIFICATION";
         List<Notification> list = jdbcTemplate.query(query, new NotificationRowMapper());
         return list;
+    }
+
+    public List<Notification> selectTopicDataByDate(String topic, String date) {
+        if (date.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
+            System.out.println(topic + " - " + date);
+            String query = "SELECT * FROM NOTIFICATION WHERE message LIKE '%" + topic + "%' AND date LIKE '" + date + "'";
+            List<Notification> list = jdbcTemplate.query(query, new NotificationRowMapper());
+            for (Notification noti : list) {
+                System.out.println(noti);
+            }
+            return list;
+        } else {
+            return null;
+        }
     }
 }
