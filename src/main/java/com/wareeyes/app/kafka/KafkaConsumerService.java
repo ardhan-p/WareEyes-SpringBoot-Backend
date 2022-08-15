@@ -30,14 +30,9 @@ public class KafkaConsumerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerService.class);
 
-    private Map<LocalDateTime, Long> inventoryQuantityMap = new HashMap<>();
-
     @KafkaListener(topics = "Inventory-Quantity")
     public void consumeInventoryQuantityMessage(@Payload Long msg) {
         template.convertAndSend("/topic/Inventory-Quantity", msg);
-        inventoryQuantityMap.put(LocalDateTime.now(), msg);
-
-        System.out.println(inventoryQuantityMap);
         LOGGER.info("Inventory quantity update received: " + msg);
     }
 

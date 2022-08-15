@@ -1,6 +1,7 @@
 package com.wareeyes.app.controller;
 
 import com.wareeyes.app.database.notification.NotificationDriverDB;
+import com.wareeyes.app.entity.MessageEvent;
 import com.wareeyes.app.entity.Notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +38,9 @@ public class NotificationController {
         return insert;
     }
 
-    @PostMapping("/fetchTopicData")
-    public List<Notification> fetchTopicData(@RequestBody Notification noti) {
-        return db.selectTopicDataByDate(noti.getMessage(), noti.getDate());
+    @GetMapping("/fetchTopicData/{topic}/{date}")
+    public List<MessageEvent> fetchTopicData(@PathVariable String topic, @PathVariable String date) {
+        return db.selectTopicDataByDate(topic, date);
     }
 
     @PostMapping("/delete")
