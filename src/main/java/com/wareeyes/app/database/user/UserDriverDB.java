@@ -15,16 +15,21 @@ public class UserDriverDB {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public boolean checkLogin(User user) {
+    public User checkLogin(User user) {
         String query = "SELECT * FROM USER WHERE email = ? AND isAdmin = ?";
         try {
             User dbUser = jdbcTemplate.queryForObject(query, new UserRowMapper(), user.getEmail(), user.isAdmin());
-            System.out.println(user);
-            return dbUser.getPassword().equals(user.getPassword());
+            System.out.println(dbUser);
+            if (dbUser.getPassword().equals(user.getPassword())) {
+                dbUser.setPassword("");
+                return dbUser;
+            } else {
+                return null;
+            }
         } catch (Exception e) {
             System.out.println("Caught exception");
             System.out.println(user);
-            return false;
+            return null;
         }
     }
 
@@ -48,6 +53,16 @@ public class UserDriverDB {
         }
     }
 
+    public int updateUser(User user) {
+        String query = "UPDATE USER SET email = ?, name = ?, password = ? WHERE id = ?";
+
+        try {
+            return jdbcTemplate.update(query, user.getEmail(), user.getName(), user.getPassword(), user.getId());
+        } catch (Exception e){
+            return 0;
+        }
+    }
+
     public int deleteUsers(List<User> userList) {
         String query = "DELETE FROM USER WHERE email = ?";
         try {
@@ -61,10 +76,10 @@ public class UserDriverDB {
         }
     }
 
-    public User getUser(String email) {
-        String query = "SELECT * FROM USER WHERE email = ?";
+    public User getUser(String id) {
+        String query = "SELECT * FROM USER WHERE id = ?";
         try {
-            User dbUser = jdbcTemplate.queryForObject(query, new UserRowMapper(), email);
+            User dbUser = jdbcTemplate.queryForObject(query, new UserRowMapper(), id);
             dbUser.setPassword("");
             return dbUser;
         } catch (Exception e) {
