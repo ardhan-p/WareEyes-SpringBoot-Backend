@@ -1,6 +1,5 @@
 package com.wareeyes.app.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.wareeyes.app.database.topic.TopicDriverDB;
 import com.wareeyes.app.entity.KafkaMessage;
 import com.wareeyes.app.entity.Topic;
@@ -53,7 +52,7 @@ public class KafkaMessageController {
     @PostMapping("/createTopic")
     public boolean createTopic(@RequestBody Topic topic) {
         int insertToSQL = topicDriverDB.insertTopic(topic);
-        boolean createKafkaTopic = kafkaTopicService.createTopic(topic.getName(), (int) topic.getPartitions(), (short) topic.getReplicationFactor(), topic.getThreshold());
+        boolean createKafkaTopic = kafkaTopicService.createTopic(topic.getName(), topic.getThreshold(), (int) topic.getPartitions(), (short) topic.getReplicationFactor());
         boolean createKafkaConsumer = kafkaConsumerService.createConsumer(topic.getName());
 
         if (insertToSQL == 1 && createKafkaTopic == true && createKafkaConsumer == true) {
@@ -69,13 +68,13 @@ public class KafkaMessageController {
     }
 
     @PostMapping("/deleteTopic")
-    public boolean deleteTopic(@RequestBody Topic topic) {
-        return kafkaTopicService.deleteTopic(topic.getName());
+    public boolean deleteTopic(@RequestBody List<Topic> topicList) {
+        return kafkaTopicService.deleteTopic(topicList);
     }
 
     @PostMapping("/modifyTopic")
     public boolean modifyTopic(@RequestBody Topic topic) {
-        return kafkaTopicService.modifyTopic(topic.getName(), (int) topic.getPartitions(), (short) topic.getReplicationFactor(), topic.getThreshold());
+        return kafkaTopicService.modifyTopic(topic.getName(), topic.getThreshold(), (int) topic.getPartitions(), (short) topic.getReplicationFactor());
     }
 
     @PostMapping("/publish")

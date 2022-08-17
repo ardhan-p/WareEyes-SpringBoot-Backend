@@ -29,7 +29,7 @@ public class KafkaTopicService {
         }
     }
 
-    public boolean createTopic(String topicName, int partitions, short replicationFactor, long threshold) {
+    public boolean createTopic(String topicName, long threshold, int partitions, short replicationFactor) {
         try {
             getAdminClient();
             NewTopic topic = new NewTopic(topicName, partitions, replicationFactor);
@@ -47,21 +47,24 @@ public class KafkaTopicService {
         }
     }
 
-    public boolean deleteTopic(String topicName) {
+    public boolean deleteTopic(List<Topic> topicList) {
         try {
             getAdminClient();
-            DeleteTopicsResult deleteTopicsResult = client.deleteTopics(Collections.singleton(topicName));
-            System.out.println("Deleted topic: " + topicName);
+            for (Topic topic : topicList) {
+                DeleteTopicsResult deleteTopicsResult = client.deleteTopics(Collections.singleton(topic.getName()));
+                db.deleteTopic(topic);
+                System.out.println("Deleted topic: " + topic.getName());
+            }
             return true;
         } catch (Exception e) {
             System.err.println(e);
-            System.out.println("Topic doesn't exist: " + topicName);
+            System.out.println("Selected topics does not exist!");
             client.close();
             return false;
         }
     }
 
-    public boolean modifyTopic(String topicName, int partitions, short replicationFactor, long threshold) {
+    public boolean modifyTopic(String topicName, long threshold, int partitions, short replicationFactor) {
         try {
             getAdminClient();
             NewTopic topic = new NewTopic(topicName, partitions, replicationFactor);

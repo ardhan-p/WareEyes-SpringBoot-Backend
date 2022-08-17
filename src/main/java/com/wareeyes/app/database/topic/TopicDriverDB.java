@@ -1,6 +1,7 @@
 package com.wareeyes.app.database.topic;
 
 import com.wareeyes.app.entity.Topic;
+import com.wareeyes.app.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,16 @@ public class TopicDriverDB {
     public int insertTopic(Topic topic) {
         String query = "INSERT INTO TOPIC  (name, threshold, partitions, replicationFactor) VALUES (?, ?, ?, ?)";
         return jdbcTemplate.update(query, topic.getName(), topic.getThreshold(), topic.getPartitions(), topic.getReplicationFactor());
+    }
+
+    public int deleteTopic(Topic topic) {
+        String query = "DELETE FROM TOPIC WHERE name = ?";
+        try {
+            int result = jdbcTemplate.update(query, topic.getName());
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public int modifyTopic(Topic topic) {
