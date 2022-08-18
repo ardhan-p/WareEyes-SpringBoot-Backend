@@ -1,6 +1,8 @@
 package com.wareeyes.app.controller;
 
+import com.wareeyes.app.database.data.DataDriverDB;
 import com.wareeyes.app.database.topic.TopicDriverDB;
+import com.wareeyes.app.entity.Data;
 import com.wareeyes.app.entity.KafkaMessage;
 import com.wareeyes.app.entity.Topic;
 import com.wareeyes.app.kafka.KafkaConsumerService;
@@ -26,6 +28,9 @@ public class KafkaMessageController {
 
     @Autowired
     private KafkaTopicService kafkaTopicService;
+
+    @Autowired
+    private DataDriverDB dataDriverDB;
 
     @Autowired
     private TopicDriverDB topicDriverDB;
@@ -75,6 +80,11 @@ public class KafkaMessageController {
     @PostMapping("/modifyTopic")
     public boolean modifyTopic(@RequestBody Topic topic) {
         return kafkaTopicService.modifyTopic(topic.getName(), topic.getThreshold(), (int) topic.getPartitions(), (short) topic.getReplicationFactor());
+    }
+
+    @GetMapping("/requestData/{data}")
+    public Data requestData(@PathVariable("data") int data) {
+        return dataDriverDB.getData(data);
     }
 
     @PostMapping("/publish")

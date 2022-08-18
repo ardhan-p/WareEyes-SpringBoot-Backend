@@ -2,12 +2,10 @@ package com.wareeyes.app.entity;
 
 public class KafkaMessage {
     private String topic;
+    private long value;
 
     public KafkaMessage() {
     }
-
-    private long value;
-
     public KafkaMessage(String topic, long value) {
         this.topic = topic;
         this.value = value;
