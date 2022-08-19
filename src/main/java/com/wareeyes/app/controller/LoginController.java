@@ -20,16 +20,16 @@ public class LoginController {
     UserDriverDB db;
 
     @PostMapping("/validateLogin")
-    public boolean validateLogin(@RequestBody User user) {
-        boolean validate = db.checkLogin(user);
+    public User validateLogin(@RequestBody User user) {
+        User validationUser = db.checkLogin(user);
 
-        if (validate) {
-            LOGGER.info(user.getEmail() + " has logged in!");
+        if (validationUser == null) {
+            LOGGER.info(user.getEmail() + " is invalid!");
+            return null;
         } else {
-            LOGGER.info(user.getEmail() + " unsuccessful login!");
+            LOGGER.info(user.getEmail() + " has logged in!");
+            return validationUser;
         }
-
-        return validate;
     }
 
     @PostMapping("/validateEmail")
@@ -63,9 +63,9 @@ public class LoginController {
         return db.selectAllUsers();
     }
 
-    @GetMapping("/getUser/{email}")
-    public User getUser(@PathVariable String email) {
-        User searchedUser = db.getUser(email);
+    @GetMapping("/getUser/{id}")
+    public User getUser(@PathVariable String id) {
+        User searchedUser = db.getUser(id);
         return searchedUser;
     }
 
@@ -77,6 +77,19 @@ public class LoginController {
             LOGGER.info("User " + user.getEmail() + " has been added successfully");
         } else {
             LOGGER.info("User " + user.getEmail() + " cannot be added, already exists");
+        }
+
+        return result;
+    }
+
+    @PostMapping("/updateUser")
+    public int updateUser(@RequestBody User user) {
+        int result = db.updateUser(user) ;
+
+        if (result == 1) {
+            LOGGER.info("User " + user.getEmail() + " has been updated successfully");
+        } else {
+            LOGGER.info("User " + user.getEmail() + " cannot be updated");
         }
 
         return result;
