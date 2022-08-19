@@ -1,7 +1,6 @@
 package com.wareeyes.app;
 
 import com.wareeyes.app.database.data.DataDriverDB;
-import com.wareeyes.app.entity.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
