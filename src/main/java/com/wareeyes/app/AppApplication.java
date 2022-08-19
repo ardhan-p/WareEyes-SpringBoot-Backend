@@ -30,13 +30,10 @@ public class AppApplication {
 			Thread thread1 = new Thread(() -> {
 				while (true) {
 					long randomInterval = (long)(Math.random() * 35) + 25;
-					System.out.println(randomInterval);
 
 					try {
 						Thread.sleep(randomInterval * 1000);
 						long rand = (long)(Math.random() * 7000) + 4000;
-						System.out.println("Thread 1");
-						System.out.println(rand);
 						kafkaTemplate.send("Inventory-Quantity", rand);
 					} catch (Exception e){
 						System.out.println("Something went wrong!");
@@ -47,13 +44,10 @@ public class AppApplication {
 			Thread thread2 = new Thread(() -> {
 				while (true) {
 					long randomInterval = (long)(Math.random() * 35) + 25;
-					System.out.println(randomInterval);
 
 					try {
 						Thread.sleep(randomInterval * 1000);
 						long rand = (long)(Math.random() * 300) + 150;
-						System.out.println("Thread 2");
-						System.out.println(rand);
 						kafkaTemplate.send("Current-Number-Of-Employees", rand);
 					} catch (Exception e){
 						System.out.println("Something went wrong!");
@@ -64,13 +58,10 @@ public class AppApplication {
 			Thread thread3 = new Thread(() -> {
 				while (true) {
 					long randomInterval = (long)(Math.random() * 35) + 25;
-					System.out.println(randomInterval);
 
 					try {
 						Thread.sleep(randomInterval * 1000);
 						long rand = (long)(Math.random() * 1000) + 300;
-						System.out.println("Thread 3");
-						System.out.println(rand);
 						kafkaTemplate.send("Transactions-Completed", rand);
 					} catch (Exception e){
 						System.out.println("Something went wrong!");
@@ -81,13 +72,10 @@ public class AppApplication {
 			Thread thread4 = new Thread(() -> {
 				while (true) {
 					long randomInterval = (long)(Math.random() * 35) + 25;
-					System.out.println(randomInterval);
 
 					try {
 						Thread.sleep(randomInterval * 1000);
 						long rand = (long)(Math.random() * 300) + 150;
-						System.out.println("Thread 4");
-						System.out.println(rand);
 						kafkaTemplate.send("Deliveries-Sent", rand);
 					} catch (Exception e){
 						System.out.println("Something went wrong!");
@@ -98,13 +86,10 @@ public class AppApplication {
 			Thread thread5 = new Thread(() -> {
 				while (true) {
 					long randomInterval = (long)(Math.random() * 35) + 25;
-					System.out.println(randomInterval);
 
 					try {
 						Thread.sleep(randomInterval * 1000);
 						long rand = (long)(Math.random() * 300) + 150;
-						System.out.println("Thread 5");
-						System.out.println(rand);
 						kafkaTemplate.send("Deliveries-Received", rand);
 					} catch (Exception e){
 						System.out.println("Something went wrong!");
