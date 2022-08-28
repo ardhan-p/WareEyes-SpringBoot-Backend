@@ -16,13 +16,18 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import java.util.HashMap;
 import java.util.Map;
 
+// configuration class for Kafka consumers
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {
 
+    // uses the Kafka server URL from application properties
     @Value("${spring.kafka.bootstrap-servers}")
     public String bootstrapServer;
 
+    // all configuration values are placed in a map
+    // the key and value will need to be deserialized into a string and long values respectively
+    // this is to ensure that the consumers are able to consume the data correctly
     @Bean
     public Map<String, Object> consumerConfig() {
         Map<String, Object> props=new HashMap<String, Object>();
@@ -36,11 +41,15 @@ public class KafkaConsumerConfig {
         return props;
     }
 
+    // consumer factory is responsible for the creation of
+    // kafka consumers with the specific configuration
     @Bean
     public ConsumerFactory<String, Long> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfig());
     }
 
+    // the concurrent Kafka listener container ensures that new consumers
+    // are able to be created in conjunction with other existing consumers
     @Bean
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Long>> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, Long> factory = new ConcurrentKafkaListenerContainerFactory();

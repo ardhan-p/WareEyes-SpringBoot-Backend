@@ -1,5 +1,8 @@
 package com.wareeyes.app.entity;
 
+// KafkaMessage class that represents a published Kafka data event
+// each message will have a specific topic attached to it
+// as well as the value the message will hold
 public class KafkaMessage {
     private String topic;
     private long value;

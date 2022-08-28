@@ -6,6 +6,7 @@ import org.springframework.data.relational.core.dialect.AnsiDialect;
 import org.springframework.data.relational.core.dialect.Dialect;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 
+// config class to set up the JDBC template for sending SQL statements in the correct format
 @Configuration
 public class SpringDataJdbcConfiguration extends AbstractJdbcConfiguration {
 

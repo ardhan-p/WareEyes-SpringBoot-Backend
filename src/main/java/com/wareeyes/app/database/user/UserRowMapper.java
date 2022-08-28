@@ -6,9 +6,9 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+// maps the SQL data row into a workable User object
 public class UserRowMapper implements RowMapper<User> {
 
-    // maps SQL rows into User objects
     @Override
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
         User user = new User();

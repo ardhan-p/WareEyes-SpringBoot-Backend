@@ -6,9 +6,9 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+// maps the SQL data row into a workable Topic object
 public class TopicRowMapper implements RowMapper<Topic> {
 
-    // maps SQL rows into Topic objects
     @Override
     public Topic mapRow(ResultSet rs, int rowNum) throws SQLException {
         Topic topic = new Topic();

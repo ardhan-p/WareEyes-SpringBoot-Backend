@@ -17,16 +17,24 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+// service class for Kafka consumers
 @Service
 public class KafkaConsumerService {
+
+    // a Kafka messaging template is autowired so that consumers
+    // are able to send data through a websocket correctly
     @Autowired
     SimpMessagingTemplate template;
 
+    // uses the Kafka server URL from application properties
     @Value("${spring.kafka.bootstrap-servers}")
     public String bootstrapServer;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerService.class);
 
+    // create default Kafka consumers with default topics
+    // once a Kafka message is consumed, it will convert the message and
+    // send it to their respective websocket
     @KafkaListener(topics = "Inventory-Quantity")
     public void consumeInventoryQuantityMessage(@Payload Long msg) {
         template.convertAndSend("/topic/Inventory-Quantity", msg);
@@ -57,16 +65,20 @@ public class KafkaConsumerService {
         LOGGER.info("Deliveries received data update received: " + msg);
     }
 
+    // function will create new custom Kafka consumer depending on the specific topic name
     public boolean createConsumer(String topic) {
         try {
             ContainerProperties containerProps = new ContainerProperties(topic);
             String destination = "/topic/" + topic;
 
+            // once a Kafka message is consumed, it will convert the message and
+            // send it to their respective websocket
             containerProps.setMessageListener((MessageListener<String, Long>) message -> {
                 template.convertAndSend(destination, message.value());
                 LOGGER.info("Custom msg received: " + message.value() + " - Topic: " + destination);
             });
 
+            // a Kafka consumer Spring container bean will be created and will start running
             KafkaMessageListenerContainer<String, Long> container = createContainer(containerProps);
             container.setBeanName(topic);
             container.start();
@@ -78,6 +90,7 @@ public class KafkaConsumerService {
         }
     }
 
+    // configuration class for new Kafka consumer containers
     private KafkaMessageListenerContainer<String, Long> createContainer(ContainerProperties containerProps) {
         Map<String, Object> props=new HashMap<String, Object>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
@@ -89,9 +102,5 @@ public class KafkaConsumerService {
         DefaultKafkaConsumerFactory<String, Long> cf = new DefaultKafkaConsumerFactory<>(props);
         KafkaMessageListenerContainer<String, Long> container = new KafkaMessageListenerContainer<>(cf, containerProps);
         return container;
-    }
-
-    public void createOffsetConsumer() {
-
     }
 }

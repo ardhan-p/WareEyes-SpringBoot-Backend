@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+// maps the SQL data row into a workable Notification object
 public class NotificationRowMapper implements RowMapper<Notification> {
 
     @Override

@@ -1,5 +1,8 @@
 package com.wareeyes.app.entity;
 
+// MessageEvent class is used to represent a Kafka event with the time that it's published
+// used in the monitor data section of the front end, with the
+// x value representing the time and y representing data value
 public class MessageEvent {
     private String x;
     private int y;

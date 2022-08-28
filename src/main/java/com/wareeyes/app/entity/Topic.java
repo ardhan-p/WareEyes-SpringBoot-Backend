@@ -1,5 +1,7 @@
 package com.wareeyes.app.entity;
 
+// Topic class that represents a Kafka topic
+// contains the threshold value, number of partitions, and the factor of replication
 public class Topic {
     private long id;
     private String name;

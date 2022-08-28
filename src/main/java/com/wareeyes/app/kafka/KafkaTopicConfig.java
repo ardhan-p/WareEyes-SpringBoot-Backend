@@ -10,10 +10,11 @@ import org.springframework.kafka.core.KafkaAdmin;
 import java.util.HashMap;
 import java.util.Map;
 
-// kafka topic config class is needed to create new kafka topics
+// Kafka topic config class is needed to create new kafka topics
 @Configuration
 public class KafkaTopicConfig {
 
+    // an admin class is needed to enable the creation of new Kafka topics
     @Bean
     public KafkaAdmin admin() {
         Map<String, Object> configs = new HashMap<>();
@@ -21,6 +22,7 @@ public class KafkaTopicConfig {
         return new KafkaAdmin(configs);
     }
 
+    // each default Kafka topic will be created using TopicBuilder function
     @Bean
     public NewTopic createInventoryQuantityTopic() {
         return TopicBuilder.name("Inventory-Quantity")
