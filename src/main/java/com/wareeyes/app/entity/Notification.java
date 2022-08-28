@@ -3,6 +3,7 @@ package com.wareeyes.app.entity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+// Notification class that represents a Kafka message notification
 public class Notification {
     private long id;
     private String message;

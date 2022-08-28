@@ -9,9 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.kafka.core.KafkaTemplate;
 
-
-import java.util.concurrent.TimeUnit;
-
 @SpringBootApplication
 @ComponentScan
 public class AppApplication {
@@ -23,9 +20,12 @@ public class AppApplication {
 		SpringApplication.run(AppApplication.class, args);
 	}
 
+	// generate synchronous Kafka data
 	@Bean
 	CommandLineRunner clr(KafkaTemplate<String, Long> kafkaTemplate) {
 		return args -> {
+
+			// each thread is responsible for a specific topic
 			Thread thread1 = new Thread(() -> {
 				while (true) {
 					long randomInterval = (long)(Math.random() * 35) + 25;

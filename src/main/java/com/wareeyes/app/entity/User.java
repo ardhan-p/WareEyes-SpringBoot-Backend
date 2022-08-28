@@ -1,4 +1,6 @@
 package com.wareeyes.app.entity;
+
+// User class that represents a user
 public class User {
     private long id;
     private String email;

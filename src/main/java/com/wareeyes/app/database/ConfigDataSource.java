@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+// config class to set up the connection from Spring Boot to an external MySQL server
 @Configuration
 public class ConfigDataSource {
 

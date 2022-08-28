@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// controller class which contains all the RESTful APIs that involves the notification system
 @RestController
 @RequestMapping("/api/v1/notification")
 public class NotificationController {

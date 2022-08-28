@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+// service class for Kafka topics
 @Service
 public class KafkaTopicService {
 
@@ -18,17 +19,22 @@ public class KafkaTopicService {
     @Autowired
     private KafkaConsumerService consumerService;
 
+    // admin client object is needed for handling Kafka topics in Kafka server
     private AdminClient client;
 
     @Autowired
     private TopicDriverDB db;
 
+    // initialises a Kafka admin if it has not done so
     private void getAdminClient() {
         if (client == null) {
             client = AdminClient.create(admin.getConfigurationProperties());
         }
     }
 
+    // creates a new custom topic with new variables
+    // it will first create the topic into the Kafka server and initialise it so that Kafka can recognise it
+    // it will then insert the topic parameters onto the MySQL database
     public boolean createTopic(String topicName, long threshold, int partitions, short replicationFactor) {
         try {
             getAdminClient();
@@ -47,6 +53,9 @@ public class KafkaTopicService {
         }
     }
 
+    // deletes a list of Kafka topics
+    // it will first let the Kafka admin delete each topic sequentially in the Kafka server
+    // it will then delete the specific Kafka topics from the MySQL database
     public boolean deleteTopic(List<Topic> topicList) {
         try {
             getAdminClient();
@@ -64,6 +73,9 @@ public class KafkaTopicService {
         }
     }
 
+    // modifies a specific Kafka topic
+    // it will first let the Kafka admin modify the topic in the Kafka server with new values
+    // it will then update the specific Kafka topic in the MySQL database
     public boolean modifyTopic(String topicName, long threshold, int partitions, short replicationFactor) {
         try {
             getAdminClient();
@@ -79,6 +91,7 @@ public class KafkaTopicService {
         }
     }
 
+    // list the available Kafka topics in the Kafka server
     public Set<String> listTopics() {
         try {
             getAdminClient();
@@ -90,18 +103,5 @@ public class KafkaTopicService {
             client.close();
             return null;
         }
-    }
-
-    public int getTopicThreshold(String topicName) {
-        Topic newTopic = new Topic(topicName);
-        try {
-            return db.getTopicThreshold(newTopic);
-        } catch (Exception e) {
-            return -1;
-        }
-    }
-
-    public List<Topic> getAllTopicInfo() {
-        return db.selectAllTopics();
     }
 }

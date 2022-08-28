@@ -1,5 +1,6 @@
 package com.wareeyes.app.entity;
 
+// Data class that represents a data row in the MySQL server
 public class Data {
     private int id;
     private int data;
